@@ -66,7 +66,7 @@ def delete(
     skip_prompt: bool = typer.Option(True, "-y", "--yes", help="Skip the confirmation prompt"),
     delete_tag: bool = typer.Option(True, "--delete-tag"),
 ):
-    """delete a release."""
+    """Delete a release."""
     cmd = "gh release delete"
     if tag is None:
         version = get_project_version()
