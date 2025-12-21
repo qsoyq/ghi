@@ -1,9 +1,11 @@
 import subprocess
 from pathlib import Path
+from functools import cache
 import typer
 import toml
 
 
+@cache
 def get_pyproject_data() -> dict:
     "从当前路径递归向上查找 pyproject.toml"
     p = Path("./pyproject.toml")

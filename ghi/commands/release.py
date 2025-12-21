@@ -1,37 +1,28 @@
 import shlex
 import subprocess
 
-from pathlib import Path
 from typing import Optional
 
-import toml
 import typer
-
-from ghi.utils import version_callback
+from ghi.utils import get_project_version
 
 cmd = typer.Typer(help="A wrapper for github cli release command.")
 
 
+@cmd.callback(invoke_without_command=True)
+def default(): ...
+
+
 @cmd.command()
 def create(
-    tag: Optional[str] = typer.Option(None, "--tag"),
+    tag: str | None = typer.Option(None, "--tag"),
     title: str = typer.Option("", "-t", "--title", help="Release title"),
-    target: str = typer.Option(
-        "", "--target", help="Target branch or full commit SHA (default: main branch)"
-    ),
+    target: str = typer.Option("", "--target", help="Target branch or full commit SHA (default: main branch)"),
     notes: str = typer.Option("", "--notes", "-n", help="Release notes"),
-    prerelease: Optional[bool] = typer.Option(
-        None, "-p", "--prerelease ", help="Mark the release as a prerelease"
-    ),
-    _version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
-    verbose: Optional[bool] = typer.Option(
-        None,
-        "--verbose",
-    ),
+    prerelease: bool | None = typer.Option(None, "-p", "--prerelease ", help="Mark the release as a prerelease"),
+    verbose: bool = typer.Option(False, "--verbose"),
 ):
-    """Create a new GitHub Release for a repository."""
+    """Create a new gitHub release for a repository."""
     # TODO: add release assets
     cmd = "gh release create"
     if notes:
@@ -49,25 +40,8 @@ def create(
         cmd += f" -t {title}"
 
     if tag is None:
-        config_path = Path("pyproject.toml")
-        if not config_path.exists():
-            typer.echo("pyproject.yaml is not exists.")
-            raise typer.Exit(1)
-
-        document = toml.load(config_path)
-        try:
-            version = document["tool"]["poetry"]["version"]
-        except KeyError:
-            typer.echo("version is not found in pyproject.toml")
-            raise typer.Exit(1)
-
-        if not isinstance(version, str):
-            raise typer.Exit(1)
-
-        if version.startswith("v"):
-            tag = version
-        else:
-            tag = f"v{version}"
+        version = get_project_version()
+        tag = version
 
     cmd += f" {tag}"
     args = shlex.split(cmd)
@@ -89,36 +63,14 @@ def delete(
         None,
         "--verbose",
     ),
-    skip_prompt: bool = typer.Option(
-        True, "-y", "--yes", help="Skip the confirmation prompt"
-    ),
+    skip_prompt: bool = typer.Option(True, "-y", "--yes", help="Skip the confirmation prompt"),
     delete_tag: bool = typer.Option(True, "--delete-tag"),
-    _version: Optional[bool] = typer.Option(
-        None, "--version", "-V", callback=version_callback
-    ),
 ):
-    """Delete a release."""
+    """delete a release."""
     cmd = "gh release delete"
     if tag is None:
-        config_path = Path("pyproject.toml")
-        if not config_path.exists():
-            typer.echo("pyproject.yaml is not exists.")
-            raise typer.Exit(1)
-
-        document = toml.load(config_path)
-        try:
-            version = document["tool"]["poetry"]["version"]
-        except KeyError:
-            typer.echo("version is not found in pyproject.toml")
-            raise typer.Exit(1)
-
-        if not isinstance(version, str):
-            raise typer.Exit(1)
-
-        if version.startswith("v"):
-            tag = version
-        else:
-            tag = f"v{version}"
+        version = get_project_version()
+        tag = version
 
     if skip_prompt:
         cmd += " -y"
