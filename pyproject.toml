@@ -1,6 +1,6 @@
 [project]
 name = "ghi"
-version = "0.1.1"
+version = "0.1.2"
 description = "A Wrapper for github cli."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -9,6 +9,17 @@ dependencies = [
     "toml>=0.10.2",
     "typer>=0.20.1",
 ]
+
+[project.scripts]
+ghi = "ghi.commands.main:cmd"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ghi"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
