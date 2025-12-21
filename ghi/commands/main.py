@@ -18,6 +18,7 @@ def add_default_invoke():
         _cmd.callback(invoke_without_command=True)(default_invoke_without_command)
 
 
+add_default_invoke()
+
 if __name__ == "__main__":
-    add_default_invoke()
     cmd()

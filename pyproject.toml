@@ -1,6 +1,6 @@
 [project]
 name = "ghi"
-version = "0.1.2"
+version = "0.1.3"
 description = "A Wrapper for github cli."
 readme = "README.md"
 requires-python = ">=3.10"
