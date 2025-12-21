@@ -22,6 +22,8 @@ python -m ghi --help
 
 ### Release
 
+Use the version from pyproject.toml as the default release tag
+
 ```bash
 python -m ghi release --help
 

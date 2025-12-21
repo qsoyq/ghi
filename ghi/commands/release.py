@@ -15,7 +15,7 @@ def default(): ...
 
 @cmd.command()
 def create(
-    tag: str | None = typer.Option(None, "--tag"),
+    tag: str | None = typer.Option(None, "--tag", help="Release tag,  use the version from pyproject.toml as the default release tag"),
     title: str = typer.Option("", "-t", "--title", help="Release title"),
     target: str = typer.Option("", "--target", help="Target branch or full commit SHA (default: main branch)"),
     notes: str = typer.Option("", "--notes", "-n", help="Release notes"),
