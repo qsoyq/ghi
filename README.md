@@ -20,4 +20,6 @@ pip install git+https://github.com/qsoyq/ghi.git@0.1.0
 
 ```bash
 python -m ghi release create
+
+python -m ghi release delete
 ```
