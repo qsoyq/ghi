@@ -1,18 +1,20 @@
+import importlib.metadata
 import subprocess
 from pathlib import Path
 from functools import cache
 import typer
 import toml
+import ghi
 
 
 @cache
 def get_pyproject_data() -> dict:
     "从当前路径递归向上查找 pyproject.toml"
-    p = Path("./pyproject.toml")
+    p = Path("./pyproject.toml").absolute()
     while not p.exists():
-        if not p.parent:
+        if str(p.absolute()) == "/pyproject.toml":
             raise RuntimeError("pyproject.toml not exists.")
-        p = p.parent / "pyproject.toml"
+        p = p.parent.parent / "pyproject.toml"
 
     if not p.is_file():
         raise TypeError("pyproject.toml must be file.")
@@ -33,8 +35,8 @@ def get_project_version() -> str | None:
 
 def version_callback(value: bool):
     if value:
-        name = get_project_name()
-        version = get_project_version()
+        name = ghi.__name__
+        version = importlib.metadata.version(ghi.__name__)
         typer.echo(f"{name} cli version: {version}")
         raise typer.Exit()
 
