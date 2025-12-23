@@ -87,7 +87,7 @@ requires-dist = [
     { name = "pydantic-settings", specifier = ">=2.12.0" },
     { name = "toml", specifier = ">=0.10.2" },
     { name = "typer", specifier = ">=0.20.1" },
-    { name = "typer-utils", git = "https://github.com/qsoyq/typer_utils.git?rev=0.1.1" },
+    { name = "typer-utils", git = "https://github.com/qsoyq/typer_utils" },
 ]
 
 [[package]]
@@ -526,7 +526,7 @@ wheels = [
 [[package]]
 name = "typer-utils"
 version = "0.1.1"
-source = { git = "https://github.com/qsoyq/typer_utils.git?rev=0.1.1#18ac4a4d3a1f454ef209cf85d82de058ad84459c" }
+source = { git = "https://github.com/qsoyq/typer_utils#18ac4a4d3a1f454ef209cf85d82de058ad84459c" }
 dependencies = [
     { name = "pre-commit" },
     { name = "pytest" },
