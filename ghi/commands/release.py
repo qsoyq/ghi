@@ -4,13 +4,14 @@ import subprocess
 from typing import Optional
 
 import typer
-from ghi.utils import get_project_version
+from typer_utils.utils import get_project_version
 
 cmd = typer.Typer(help="A wrapper for github cli release command.")
 
 
 @cmd.callback(invoke_without_command=True)
-def default(): ...
+def default():
+    ...
 
 
 @cmd.command()
