@@ -1,6 +1,5 @@
 import shlex
 import subprocess
-
 from typing import Optional
 
 import typer
@@ -10,8 +9,7 @@ cmd = typer.Typer(help="A wrapper for github cli release command.")
 
 
 @cmd.callback(invoke_without_command=True)
-def default():
-    ...
+def default(): ...
 
 
 @cmd.command()
